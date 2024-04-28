@@ -9,7 +9,7 @@ namespace SQR {
 	Processador::Processador(int cores, int threads, double clock_base, double clock_turbo, double cache, char* nome, char* fabricante) : ComponenteHardware(nome, fabricante), cores(cores),
 		threads(threads), clock_base(clock_base), cache(cache), clock_turbo(clock_turbo){
 		if (clock_base < 0) {
-			clock_base = 0.1;
+			clock_base = 0;
 		}
 
 		this->clock_base = clock_base;

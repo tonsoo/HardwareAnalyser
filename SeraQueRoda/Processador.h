@@ -4,6 +4,9 @@
 #include <random>
 #include "ComponenteHardware.h"
 
+#ifndef Processador_h
+#define Processador_h
+
 namespace SQR {
 
 	class Processador : public ComponenteHardware {
@@ -29,3 +32,5 @@ namespace SQR {
 		double cache; // Memoria cache em Mb
 	};
 }
+
+#endif

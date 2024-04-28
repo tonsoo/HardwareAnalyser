@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef ComponenteHardware_h
+#define ComponenteHardware_h
+
 namespace SQR {
 
 	class ComponenteHardware {
@@ -20,3 +23,5 @@ namespace SQR {
 		char fabricante[150];
 	};
 }
+
+#endif

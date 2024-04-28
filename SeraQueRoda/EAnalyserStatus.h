@@ -16,4 +16,4 @@ namespace SQR {
     };
 }
 
-#endif /* EAnalyserStatus_h */
+#endif
