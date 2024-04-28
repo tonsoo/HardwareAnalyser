@@ -5,6 +5,7 @@
 #include <string.h>
 #include <locale>
 #include <codecvt>
+#include <nvml.h>
 
 #pragma comment(lib, "wbemuuid.lib")
 
@@ -105,6 +106,15 @@ namespace SQR {
         case EAnalyserStatus::WMI_QUERY_ERROR:
             std::cerr << "Failed to execute WMI query.";
             break;
+        case EAnalyserStatus::NVML_INIT_ERROR:
+            std::cerr << "Failed to initialize NVML.";
+            break;
+        case EAnalyserStatus::GPU_HANDLER_ERROR:
+            std::cerr << "Failed to get NVML handler.";
+            break;
+        case EAnalyserStatus::NVML_GET_ERROR:
+            std::cerr << "Failed to retrieve information from NVML.";
+            break;
         case EAnalyserStatus::OK:
         default:
             error = false;
@@ -192,6 +202,78 @@ namespace SQR {
         }
 
         return new Processador(cores, threads, clockSpeed, clockTurboSpeed, cache / 1024, name, fabricante);
+    }
+
+    PlacaDeVideo* HardwareAnalyser::GPUInfo() {
+        // Chamada para inicializar o enumerator dos componentes do Processador
+        IEnumWbemClassObject* hardwareEnumerator = this->Scan("SELECT * FROM Win32_Processor");
+
+        // Declaração das variaveis do Processador
+        char* name{ new char[50] };
+        char* fabricante{ new char[50] };
+        int cores = 0;
+        int threads = 0;
+        double clockSpeed = 0;
+        double clockTurboSpeed = 0;
+        double cache = 0;
+
+        double vram = 0;
+
+        nvmlReturn_t result;
+
+        // Inicialize a NVML
+        result = nvmlInit();
+        if (result != NVML_SUCCESS) {
+            this->SetStatus(EAnalyserStatus::NVML_INIT_ERROR);
+            return nullptr;
+        }
+
+        // Pegue o handle do dispositivo
+        nvmlDevice_t device;
+        result = nvmlDeviceGetHandleByIndex(0, &device); // Index 0 representa a primeira GPU
+        if (result != NVML_SUCCESS) {
+            this->SetStatus(EAnalyserStatus::GPU_HANDLER_ERROR);
+            nvmlShutdown();
+            return nullptr;
+        }
+
+        // Pegue o nome do dispositivo
+        result = nvmlDeviceGetName(device, name, NVML_DEVICE_NAME_BUFFER_SIZE);
+
+        //// Pegue o número de cores
+        //result = nvmlcount(device, NVML_DEVICE_ATTRIBUTE_MULTIPROCESSOR_COUNT, &numCores); // 0 representa o índice da GPU
+        //if (result != NVML_SUCCESS) {
+        //    std::cerr << "Falha ao obter o número de cores. Código de erro: " << nvmlErrorString(result) << std::endl;
+        //    nvmlShutdown();
+        //    return nullptr;
+        //}
+
+        //// Pegue o número de threads
+        //unsigned int numThreads;
+        //result = nvmlDeviceGetCudaEnabledDeviceCount(&numThreads);
+        //if (result != NVML_SUCCESS) {
+        //    std::cerr << "Falha ao obter o número de threads. Código de erro: " << nvmlErrorString(result) << std::endl;
+        //    nvmlShutdown();
+        //    return nullptr;
+        //}
+        //std::cout << "Número de threads: " << numThreads << std::endl;
+
+        // Pegue a velocidade do clock
+        unsigned int clock;
+        result = nvmlDeviceGetMaxClockInfo(device, NVML_CLOCK_SM, &clock);
+        if (result == NVML_SUCCESS) {
+            clockSpeed = (double)clock / pow(10, 1e+6);
+        }
+
+        nvmlMemory_t memory;
+        result = nvmlDeviceGetMemoryInfo(device, &memory);
+        if (result == NVML_SUCCESS) {
+            vram = memory.total / 1e+6;
+        }
+
+        nvmlShutdown();
+
+        return new PlacaDeVideo(vram, cores, threads, clockSpeed, clockTurboSpeed, cache / 1024, name, fabricante);
     }
 
     void HardwareAnalyser::Filter(LPCWSTR query, HRESULT* hr, IWbemClassObject& filterObject, const std::function<void(VARIANT&)>& func) {

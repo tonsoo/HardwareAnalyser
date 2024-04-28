@@ -36,6 +36,9 @@
     <ClCompile Include="HardwareAnalyser.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="PlacaDeVideo.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Processador.h">
@@ -50,5 +53,11 @@
     <ClInclude Include="EAnalyserStatus.h">
       <Filter>Source Files\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="PlacaDeVideo.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

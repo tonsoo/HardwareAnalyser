@@ -10,6 +10,7 @@
 #pragma comment(lib, "wbemuuid.lib")
 
 #include "Processador.h"
+#include "PlacaDeVideo.h"
 #include "EAnalyserStatus.h"
 
 #ifndef HardwareAnalyser_h
@@ -24,6 +25,7 @@ namespace SQR {
         void Release();
 
         Processador* ProcessorInfo();
+        PlacaDeVideo* GPUInfo();
     private:
         void SetStatus(EAnalyserStatus status);
         EAnalyserStatus AnalyserStatus;

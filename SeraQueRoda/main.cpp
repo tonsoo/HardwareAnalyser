@@ -25,6 +25,7 @@ int main() {
 	// Inicializa o analisador de hardware
 	SQR::HardwareAnalyser* analyser = new SQR::HardwareAnalyser();
 
+	/* PROCESSADOR */
 	// Inicializa um processador com base no processador do usuario
 	SQR::Processador* p = analyser->ProcessorInfo();
 
@@ -37,17 +38,9 @@ int main() {
 	// Mostra as informações do processador na tela
 	std::cout << p;
 
+	/* PLACA DE VIDEO */
+
 	std::cin.get();
-
-	/*int i = 10;
-
-	int* iP = &i;
-
-	int& iA = i;
-
-	std::cout << "i: " << i << "\n";
-	std::cout << "iP: " << iP << "\n";
-	std::cout << "iA: " << iA << "\n";*/
 
 	return 0;
 }

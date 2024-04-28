@@ -124,21 +124,34 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ComponenteHardware.cpp" />
     <ClCompile Include="HardwareAnalyser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlacaDeVideo.cpp" />
     <ClCompile Include="Processador.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComponenteHardware.h" />
     <ClInclude Include="EAnalyserStatus.h" />
     <ClInclude Include="HardwareAnalyser.h" />
+    <ClInclude Include="PlacaDeVideo.h" />
     <ClInclude Include="Processador.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\nvml.10.2.1\build\native\nvml.targets" Condition="Exists('packages\nvml.10.2.1\build\native\nvml.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\nvml.10.2.1\build\native\nvml.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nvml.10.2.1\build\native\nvml.targets'))" />
+  </Target>
 </Project>
