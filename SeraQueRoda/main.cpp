@@ -21,6 +21,25 @@ std::ostream& operator <<(std::ostream& os, const SQR::Processador* proc) {
 	return os;
 }
 
+std::ostream& operator <<(std::ostream& os, const SQR::PlacaDeVideo* proc) {
+
+	os << "-=-=-=-=-=-=-=-=\n";
+	os << "Informacoes da Placa de Video:\n";
+	os << "  Nome: " << proc->Nome() << "\n";
+	os << "  Fabricante: " << proc->Fabricante() << "\n";
+	os << "  Clock Base: " << proc->ClockBase() << "MHz\n";
+	os << "  Clock Turbo: " << proc->ClockTurbo() << "MHz\n";
+	os << "  Num. Nucleos: " << proc->Cores() << "\n";
+	os << "  Num. Threads: " << proc->Threads() << "\n";
+	os << "  Cache: " << proc->Cache() << "Mb\n";
+	os << "  VRAM: " << proc->VRAM() << "Mb\n";
+	os << "\n";
+	os << "Pontuacao: " << proc->Nota() << "\n";
+	os << "-=-=-=-=-=-=-=-=\n";
+
+	return os;
+}
+
 int main() {
 	// Inicializa o analisador de hardware
 	SQR::HardwareAnalyser* analyser = new SQR::HardwareAnalyser();
@@ -39,6 +58,12 @@ int main() {
 	std::cout << p;
 
 	/* PLACA DE VIDEO */
+
+	SQR::PlacaDeVideo* gpu = analyser->GPUInfo();
+
+	//gpu->CalcularNota(0);
+
+	std::cout << gpu;
 
 	std::cin.get();
 

@@ -27,6 +27,9 @@ namespace SQR {
         Processador* ProcessorInfo();
         PlacaDeVideo* GPUInfo();
     private:
+        PlacaDeVideo* GPU_NVIDIA();
+        PlacaDeVideo* GPU_AMD();
+
         void SetStatus(EAnalyserStatus status);
         EAnalyserStatus AnalyserStatus;
         void Filter(LPCWSTR query, HRESULT* hr, IWbemClassObject& filterObject, const std::function<void(VARIANT&)>& func);

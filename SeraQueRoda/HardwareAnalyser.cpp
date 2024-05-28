@@ -5,11 +5,23 @@
 #include <string.h>
 #include <locale>
 #include <codecvt>
-#include <nvml.h>
+#include "nvml.h"
 
 #pragma comment(lib, "wbemuuid.lib")
 
 #include "HardwareAnalyser.h"
+
+wchar_t* toLPCWSTR(const char* charString) {
+    int charLength = strlen(charString) + 1;
+
+    int wideLength = MultiByteToWideChar(CP_ACP, 0, charString, charLength, NULL, 0);
+
+    wchar_t* wideString = new wchar_t[wideLength];
+
+    MultiByteToWideChar(CP_ACP, 0, charString, charLength, wideString, wideLength);
+
+    return wideString;
+}
 
 namespace SQR {
 
@@ -204,13 +216,14 @@ namespace SQR {
         return new Processador(cores, threads, clockSpeed, clockTurboSpeed, cache / 1024, name, fabricante);
     }
 
-    PlacaDeVideo* HardwareAnalyser::GPUInfo() {
-        // Chamada para inicializar o enumerator dos componentes do Processador
-        IEnumWbemClassObject* hardwareEnumerator = this->Scan("SELECT * FROM Win32_Processor");
+    #define NVMLQUERY_DEFAULT_NVML_DLL_PATH "C:\\Program Files\\NVIDIA Corporation\\NVSMI\\NVML.DLL"
+    #define NVMLQUERY_ALTERNATIVE_NVML_DLL_PATH "C:\\Windows\\System32\\nvml.dll"
 
-        // Declaração das variaveis do Processador
+    PlacaDeVideo* HardwareAnalyser::GPU_NVIDIA() {
+        PlacaDeVideo* iRet = NULL;
+
         char* name{ new char[50] };
-        char* fabricante{ new char[50] };
+        char* fabricante{ new char[6] { 'N', 'V', 'I', 'D', 'I' , 'A' }};
         int cores = 0;
         int threads = 0;
         double clockSpeed = 0;
@@ -218,6 +231,259 @@ namespace SQR {
         double cache = 0;
 
         double vram = 0;
+
+        nvmlReturn_t nvRetValue = NVML_ERROR_UNINITIALIZED;
+
+        HINSTANCE hDLLhandle = NULL;
+        hDLLhandle = LoadLibrary(toLPCWSTR(NVMLQUERY_DEFAULT_NVML_DLL_PATH));
+
+        if (NULL == hDLLhandle)
+        {
+            hDLLhandle = LoadLibrary(toLPCWSTR(NVMLQUERY_ALTERNATIVE_NVML_DLL_PATH));
+            if (NULL == hDLLhandle)
+            {
+                return iRet;
+            }
+        }
+
+        typedef nvmlReturn_t(*PFNnvmlInit)(void);
+        typedef nvmlReturn_t(*PFNnvmlShutdown)(void);
+        typedef char* (*PFNnvmlErrorString)(nvmlReturn_t result);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetCount)(unsigned int* deviceCount);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetHandleByIndex)(unsigned int index, nvmlDevice_t* device);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetUtilizationRates)(nvmlDevice_t device, nvmlUtilization_t* utilization);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetEncoderUtilization)(nvmlDevice_t device, unsigned int* utilization, unsigned int* samplingPeriodUs);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetDecoderUtilization)(nvmlDevice_t device, unsigned int* utilization, unsigned int* samplingPeriodUs);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetMemoryInfo)(nvmlDevice_t device, nvmlMemory_t* memory);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetName)(nvmlDevice_t device, char* name, unsigned int length);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetNumGpuCores)(nvmlDevice_t device, unsigned int* numCores);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetClock)(nvmlDevice_t device, nvmlClockType_t clockType, nvmlClockId_t clockId, unsigned int* clockMHz);
+        typedef nvmlReturn_t(*PFNnvmlDeviceGetMaxClockInfo)(nvmlDevice_t device, nvmlClockType_t type, unsigned int* clock);
+
+        PFNnvmlInit pfn_nvmlInit = NULL;
+        PFNnvmlShutdown pfn_nvmlShutdown = NULL;
+        PFNnvmlErrorString pfn_nvmlErrorString = NULL;
+        PFNnvmlDeviceGetCount pfn_nvmlDeviceGetCount = NULL;
+        PFNnvmlDeviceGetHandleByIndex pfn_nvmlDeviceGetHandleByIndex = NULL;
+        PFNnvmlDeviceGetUtilizationRates pfn_nvmlDeviceGetUtilizationRates = NULL;
+        PFNnvmlDeviceGetEncoderUtilization pfn_nvmlDeviceGetEncoderUtilization = NULL;
+        PFNnvmlDeviceGetDecoderUtilization pfn_nvmlDeviceGetDecoderUtilization = NULL;
+        PFNnvmlDeviceGetMemoryInfo pfn_nvmlDeviceGetMemoryInfo = NULL;
+        PFNnvmlDeviceGetName pfn_nvmlDeviceGetName = NULL;
+        PFNnvmlDeviceGetNumGpuCores pfn_nvmlDeviceGetNumGpuCores = NULL;
+        PFNnvmlDeviceGetClock pfn_nvmlDeviceGetClock = NULL;
+        PFNnvmlDeviceGetMaxClockInfo pfn_nvmlDeviceGetMaxClockInfo = NULL;
+
+        pfn_nvmlInit = (PFNnvmlInit)GetProcAddress(hDLLhandle, "nvmlInit");
+        pfn_nvmlShutdown = (PFNnvmlShutdown)GetProcAddress(hDLLhandle, "nvmlShutdown");
+        pfn_nvmlErrorString = (PFNnvmlErrorString)GetProcAddress(hDLLhandle, "nvmlErrorString");
+        pfn_nvmlDeviceGetCount = (PFNnvmlDeviceGetCount)GetProcAddress(hDLLhandle, "nvmlDeviceGetCount");
+        pfn_nvmlDeviceGetHandleByIndex = (PFNnvmlDeviceGetHandleByIndex)GetProcAddress(hDLLhandle, "nvmlDeviceGetHandleByIndex");
+        pfn_nvmlDeviceGetName = (PFNnvmlDeviceGetName)GetProcAddress(hDLLhandle, "nvmlDeviceGetName");
+        pfn_nvmlDeviceGetUtilizationRates = (PFNnvmlDeviceGetUtilizationRates)GetProcAddress(hDLLhandle, "nvmlDeviceGetUtilizationRates");
+        pfn_nvmlDeviceGetEncoderUtilization = (PFNnvmlDeviceGetEncoderUtilization)GetProcAddress(hDLLhandle, "nvmlDeviceGetEncoderUtilization");
+        pfn_nvmlDeviceGetDecoderUtilization = (PFNnvmlDeviceGetDecoderUtilization)GetProcAddress(hDLLhandle, "nvmlDeviceGetDecoderUtilization");
+        pfn_nvmlDeviceGetMemoryInfo = (PFNnvmlDeviceGetMemoryInfo)GetProcAddress(hDLLhandle, "nvmlDeviceGetMemoryInfo");
+        pfn_nvmlDeviceGetNumGpuCores = (PFNnvmlDeviceGetNumGpuCores)GetProcAddress(hDLLhandle, "nvmlDeviceGetNumGpuCores");
+        pfn_nvmlDeviceGetClock = (PFNnvmlDeviceGetClock)GetProcAddress(hDLLhandle, "nvmlDeviceGetClock");
+        pfn_nvmlDeviceGetMaxClockInfo = (PFNnvmlDeviceGetMaxClockInfo)GetProcAddress(hDLLhandle, "nvmlDeviceGetMaxClockInfo");
+
+        nvRetValue = pfn_nvmlInit();
+
+        if (NVML_SUCCESS != nvRetValue)
+        {
+            printf("[%s] error code :%d\r\n", "nvmlInit", nvRetValue);
+            FreeLibrary(hDLLhandle);
+            hDLLhandle = NULL;
+            return iRet;
+        }
+
+        unsigned int uiNumGPUs = 0;
+        nvRetValue = pfn_nvmlDeviceGetCount(&uiNumGPUs);
+
+        if (NVML_SUCCESS != nvRetValue)
+        {
+            pfn_nvmlShutdown();
+            FreeLibrary(hDLLhandle);
+            hDLLhandle = NULL;
+            return iRet;
+        }
+
+        if (0 == uiNumGPUs)
+        {
+            printf("No NVIDIA GPUs were detected.\r\n");
+            pfn_nvmlShutdown();
+            FreeLibrary(hDLLhandle);
+            hDLLhandle = NULL;
+            return iRet;
+        }
+
+        bool bGPUUtilSupported = true;
+        bool bEncoderUtilSupported = true;
+        bool bDecoderUtilSupported = true;
+
+        for (unsigned int iDevIDX = 0; iDevIDX < uiNumGPUs; iDevIDX++)
+        {
+            nvmlDevice_t nvGPUDeviceHandle = NULL;
+            nvRetValue = pfn_nvmlDeviceGetHandleByIndex(iDevIDX, &nvGPUDeviceHandle);
+
+            if (NVML_SUCCESS != nvRetValue)
+            {
+                pfn_nvmlShutdown();
+                FreeLibrary(hDLLhandle);
+                hDLLhandle = NULL;
+                return iRet;
+            }
+
+            name = new char[NVML_DEVICE_NAME_BUFFER_SIZE] { '\0' };
+            nvRetValue = pfn_nvmlDeviceGetName(nvGPUDeviceHandle, name, NVML_DEVICE_NAME_BUFFER_SIZE);
+
+            if (NVML_SUCCESS != nvRetValue)
+            {
+                pfn_nvmlShutdown();
+                FreeLibrary(hDLLhandle);
+                hDLLhandle = NULL;
+                return iRet;
+            }
+
+            nvmlUtilization_t nvUtilData;
+            nvRetValue = pfn_nvmlDeviceGetUtilizationRates(nvGPUDeviceHandle, &nvUtilData);
+            if (NVML_SUCCESS != nvRetValue)
+            {
+                if (NVML_ERROR_NOT_SUPPORTED != nvRetValue)
+                {
+                    pfn_nvmlShutdown();
+                    FreeLibrary(hDLLhandle);
+                    hDLLhandle = NULL;
+                    return iRet;
+                }
+
+                bGPUUtilSupported = false;
+            }
+
+            nvmlMemory_t GPUmemoryInfo;
+            ZeroMemory(&GPUmemoryInfo, sizeof(GPUmemoryInfo));
+            nvRetValue = pfn_nvmlDeviceGetMemoryInfo(nvGPUDeviceHandle, &GPUmemoryInfo);
+            if (NVML_SUCCESS != nvRetValue)
+            {
+                pfn_nvmlShutdown();
+                FreeLibrary(hDLLhandle);
+                hDLLhandle = NULL;
+                return iRet;
+            }
+
+            unsigned long long ullFrameBufferUsedBytes = 0L;
+            ullFrameBufferUsedBytes = GPUmemoryInfo.total - GPUmemoryInfo.free;
+
+            unsigned long ulFrameBufferTotalKBytes = 0L;
+            unsigned long ulFrameBufferUsedKBytes = 0L;
+
+            if (ULONG_MAX < GPUmemoryInfo.total)
+            {
+                GPUmemoryInfo.total = 10;
+                //printf("ERROR: GPU memory size exceeds variable limit\r\n");
+                //pfn_nvmlShutdown();
+                //FreeLibrary(hDLLhandle);
+                //hDLLhandle = NULL;
+                //return iRetValue;
+            }
+
+            ulFrameBufferTotalKBytes = (unsigned long)(GPUmemoryInfo.total / 1024L);
+            ulFrameBufferUsedKBytes = (unsigned long)(ulFrameBufferTotalKBytes - (GPUmemoryInfo.free / 1024L));
+
+            std::cout << "vram: " << GPUmemoryInfo.total << "\n";
+            vram = ulFrameBufferTotalKBytes;
+
+            double dMemUtilzation = (((double)ulFrameBufferUsedKBytes / (double)ulFrameBufferTotalKBytes) * 100.0);
+
+            unsigned int uiVidEncoderUtil = 0u;
+            unsigned int uiVideEncoderLastSample = 0u;
+            nvRetValue = pfn_nvmlDeviceGetEncoderUtilization(nvGPUDeviceHandle, &uiVidEncoderUtil, &uiVideEncoderLastSample);
+            if (NVML_SUCCESS != nvRetValue)
+            {
+                if (NVML_ERROR_NOT_SUPPORTED != nvRetValue)
+                {
+                    pfn_nvmlShutdown();
+                    FreeLibrary(hDLLhandle);
+                    hDLLhandle = NULL;
+                    return iRet;
+                }
+
+                bEncoderUtilSupported = false;
+            }
+
+            unsigned int uiVidDecoderUtil = 0u;
+            unsigned int uiVidDecoderLastSample = 0u;
+            nvRetValue = pfn_nvmlDeviceGetDecoderUtilization(nvGPUDeviceHandle, &uiVidDecoderUtil, &uiVidDecoderLastSample);
+            if (NVML_SUCCESS != nvRetValue)
+            {
+                if (NVML_ERROR_NOT_SUPPORTED != nvRetValue)
+                {
+                    pfn_nvmlShutdown();
+                    FreeLibrary(hDLLhandle);
+                    hDLLhandle = NULL;
+                    return iRet;
+                }
+
+                bDecoderUtilSupported = false;
+            }
+
+            nvmlMemory_t memory;
+            nvRetValue = pfn_nvmlDeviceGetMemoryInfo(nvGPUDeviceHandle, &memory);
+            if (nvRetValue != NVML_SUCCESS) {
+                return iRet;
+            }
+            vram = (double)memory.total / 1e+6;
+
+            unsigned int cores = 0u;
+            nvRetValue = pfn_nvmlDeviceGetNumGpuCores(nvGPUDeviceHandle, &cores);
+            if (nvRetValue != NVML_SUCCESS && NVML_ERROR_NOT_SUPPORTED != nvRetValue)
+            {
+                pfn_nvmlShutdown();
+                FreeLibrary(hDLLhandle);
+                hDLLhandle = NULL;
+                return iRet;
+            }
+
+            std::cout << "Cores: " << cores << "\n";
+
+            unsigned int _clock = 0u;
+            nvRetValue = pfn_nvmlDeviceGetClock(nvGPUDeviceHandle, NVML_CLOCK_VIDEO, NVML_CLOCK_ID_CURRENT, &_clock);
+            if (nvRetValue != NVML_SUCCESS && NVML_ERROR_NOT_SUPPORTED != nvRetValue)
+            {
+                pfn_nvmlShutdown();
+                FreeLibrary(hDLLhandle);
+                hDLLhandle = NULL;
+                return iRet;
+            }
+
+            std::cout << "Clock: " << (int)_clock << "MHz\n";
+
+            unsigned int _max_clock = 0u;
+            nvRetValue = pfn_nvmlDeviceGetMaxClockInfo(nvGPUDeviceHandle, NVML_CLOCK_GRAPHICS, &_max_clock);
+            if (nvRetValue != NVML_SUCCESS && NVML_ERROR_NOT_SUPPORTED != nvRetValue)
+            {
+                pfn_nvmlShutdown();
+                FreeLibrary(hDLLhandle);
+                hDLLhandle = NULL;
+                return iRet;
+            }
+
+            std::cout << "Max Clock: " << _max_clock << "MHz\n";
+        }
+
+        nvRetValue = pfn_nvmlShutdown();
+
+        FreeLibrary(hDLLhandle);
+        hDLLhandle = NULL;
+
+        /* WINDOWS QUERY METHOD */
+
+        /*
+        // Chamada para inicializar o enumerator dos componentes do Processador
+        IEnumWbemClassObject* hardwareEnumerator = this->Scan("SELECT * FROM Win32_Processor");
+
+        // Declaração das variaveis do Processador
 
         nvmlReturn_t result;
 
@@ -272,8 +538,16 @@ namespace SQR {
         }
 
         nvmlShutdown();
+        */
 
-        return new PlacaDeVideo(vram, cores, threads, clockSpeed, clockTurboSpeed, cache / 1024, name, fabricante);
+        return new PlacaDeVideo(vram, cores, threads, clockSpeed, clockTurboSpeed, cache, name, fabricante);
+    }
+
+    PlacaDeVideo* HardwareAnalyser::GPUInfo() {
+
+        PlacaDeVideo* gpu = this->GPU_NVIDIA();
+
+        return gpu;
     }
 
     void HardwareAnalyser::Filter(LPCWSTR query, HRESULT* hr, IWbemClassObject& filterObject, const std::function<void(VARIANT&)>& func) {

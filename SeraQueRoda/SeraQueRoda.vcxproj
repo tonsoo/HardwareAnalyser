@@ -135,6 +135,7 @@
     <ClCompile Include="Processador.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Downloads\nvml.h" />
     <ClInclude Include="ComponenteHardware.h" />
     <ClInclude Include="EAnalyserStatus.h" />
     <ClInclude Include="HardwareAnalyser.h" />

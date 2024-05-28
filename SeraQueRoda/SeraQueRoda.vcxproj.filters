@@ -56,6 +56,9 @@
     <ClInclude Include="PlacaDeVideo.h">
       <Filter>Source Files\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Downloads\nvml.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
