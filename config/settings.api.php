@@ -5,9 +5,9 @@
  *  Create DB Connection
  */
 
-
 require 'functions.api.php';
 require 'paths.api.php';
+require 'responses.api.php';
 
 define('ALLOWED_METHODS', [
     'get',
