@@ -20,11 +20,36 @@ class Processador extends ComponenteHardware {
 
     public function Nota() : float {
 
-        return 0;
+        $applyedOffset = 0;
+        if($applyedOffset < 0){
+            $applyedOffset *= -1;
+        }
+
+		$programInstructions = 800;
+
+		// GHz -> Hz (10, 3)
+		// MHz -> Hz (10, 6)
+		// KHz -> Hz (10, 9)
+		// Hz -> Hz (10, 12)
+		
+		$frequency = pow(10, 6) / $this->Clock;
+
+		if ($frequency <= 0) {
+			$frequency = 1;
+		}
+
+		$clockCycles = $programInstructions + rand(-$applyedOffset, -$applyedOffset);
+		$instructionsUsed = $programInstructions + rand(-$applyedOffset, -$applyedOffset);
+
+		$CPI = $clockCycles / $instructionsUsed;
+
+		$score = $programInstructions * $CPI;
+
+        return $score / $frequency;
     }
 
     public function ToArray() : array {
-        
+
         return get_object_vars($this);
     }
 }

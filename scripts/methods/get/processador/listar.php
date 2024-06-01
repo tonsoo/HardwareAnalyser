@@ -5,7 +5,13 @@ $proc2 = new Processador(2, 'amd athlon 3000g', 'AMD', 2, 4, 3200, 3200, 2);
 
 set_response(HTTP_OK, 'OK', [
     'processors' => [
-        $proc1->ToArray(),
-        $proc2->ToArray()
+        [
+            'proc' => $proc1->ToArray(),
+            'nota' => $proc1->Nota()
+        ],
+        [
+            'proc' => $proc2->ToArray(),
+            'nota' => $proc2->Nota()
+        ],
     ]
 ]);
