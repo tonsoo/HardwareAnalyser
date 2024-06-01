@@ -36,14 +36,15 @@ $render_script = '';
 $previous_script = '';
 for($i = 0; $i < count($request_url); $i++){
     $previous_script .= "/{$request_url[$i]}";
-    $script = "{$previous_script}.php";
+    $script = PATH_METHODS."{$method_used}{$previous_script}.php";
 
-    if(!file_exists(PATH_METHODS.$script) || !is_file(PATH_METHODS.$script)){
+    if(!file_exists($script) || !is_file($script)){
         continue;
     }
 
-    $render_script = PATH_METHODS.$script;
-    break;
+    if(count(explode('/', $script)) > count(explode('/', $render_script))){
+        $render_script = $script;
+    }
 }
 
 if(!$render_script || !file_exists($render_script) || !is_file($render_script)){
