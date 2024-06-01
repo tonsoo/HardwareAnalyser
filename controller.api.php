@@ -5,20 +5,7 @@ ini_set('display_errors', true);
 require 'config/settings.api.php';
 
 $method_used = strtolower($_SERVER['REQUEST_METHOD']);
-if(!in_array($method_used, ALLOWED_METHODS)){
-    set_response(HTTP_METHOD_NOT_ALLOWED, 'method-not-allowed');
-}
-
-$input_filter = null;
-switch($method_used){
-    case 'get':
-        $input_filter = INPUT_GET;
-        break;
-
-    case 'post':
-        $input_filter = INPUT_POST;
-        break;
-}
+$input_filter = ALLOWED_METHODS[$method_used] ?? null;
 
 if($input_filter === null){
     set_response(HTTP_METHOD_NOT_ALLOWED, 'method-not-allowed');
@@ -35,10 +22,12 @@ if(!$request_url){
 
 $slice_index = 0;
 for($i = 0; $i < count($request_url) && $i < count($php_self); $i++){
-    if($request_url[$i] != $php_self[$i]){
-        $slice_index = $i;
-        break;
+    if($request_url[$i] == $php_self[$i]){
+        continue;
     }
+
+    $slice_index = $i;
+    break;
 }
 
 $request_url = array_slice($request_url, $slice_index);
@@ -46,14 +35,15 @@ $request_url = array_slice($request_url, $slice_index);
 $render_script = '';
 $previous_script = '';
 for($i = 0; $i < count($request_url); $i++){
-    $url_piece = $request_url[$i];
-    $script = "{$previous_script}/{$url_piece}.php";
-    if(file_exists(PATH_METHODS.$script) && is_file(PATH_METHODS.$script)){
-        $render_script = PATH_METHODS.$script;
-        break;
+    $previous_script .= "/{$request_url[$i]}";
+    $script = "{$previous_script}.php";
+
+    if(!file_exists(PATH_METHODS.$script) || !is_file(PATH_METHODS.$script)){
+        continue;
     }
 
-    $previous_script .= "/{$url_piece}";
+    $render_script = PATH_METHODS.$script;
+    break;
 }
 
 if(!$render_script || !file_exists($render_script) || !is_file($render_script)){

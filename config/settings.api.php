@@ -10,8 +10,8 @@ require 'paths.api.php';
 require 'responses.api.php';
 
 define('ALLOWED_METHODS', [
-    'get',
-    'post',
-    'put',
-    'delete'
+    'get' => INPUT_GET,
+    'post' => INPUT_POST,
+    'put' => INPUT_POST,
+    'delete' => INPUT_POST
 ]);
