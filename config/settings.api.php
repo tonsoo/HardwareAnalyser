@@ -5,6 +5,7 @@
  *  Create DB Connection
  */
 
+require 'classes/autoload.inc.php';
 require 'functions.api.php';
 require 'paths.api.php';
 require 'responses.api.php';
