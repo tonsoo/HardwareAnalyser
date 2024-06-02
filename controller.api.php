@@ -32,6 +32,7 @@ for($i = 0; $i < count($request_url) && $i < count($php_self); $i++){
 
 $request_url = array_slice($request_url, $slice_index);
 
+$slice_index = 0;
 $render_script = '';
 $previous_script = '';
 for($i = 0; $i < count($request_url); $i++){
@@ -44,6 +45,7 @@ for($i = 0; $i < count($request_url); $i++){
 
     if(count(explode('/', $script)) > count(explode('/', $render_script))){
         $render_script = $script;
+        $slice_index = $i;
     }
 }
 
@@ -51,4 +53,12 @@ if(!$render_script || !file_exists($render_script) || !is_file($render_script)){
     set_response(HTTP_NOT_FOUND, 'not-found');
 }
 
+$request_url = array_slice($request_url, $slice_index + 1);
+
+unset($previous_script);
+unset($script);
+unset($method_used);
+
 require $render_script;
+
+set_response(HTTP_OK, 'OK');
