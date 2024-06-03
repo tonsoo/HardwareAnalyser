@@ -130,6 +130,8 @@
   <ItemGroup>
     <ClCompile Include="ComponenteHardware.cpp" />
     <ClCompile Include="HardwareAnalyser.cpp" />
+    <ClCompile Include="HttpHandler.cpp" />
+    <ClCompile Include="HttpHandler.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlacaDeVideo.cpp" />
     <ClCompile Include="Processador.cpp" />

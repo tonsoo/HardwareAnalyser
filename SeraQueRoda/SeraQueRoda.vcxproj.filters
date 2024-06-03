@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Enums">
       <UniqueIdentifier>{e2397057-4d11-4ea3-8d74-6af5b9bcb73b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Headers\Request">
+      <UniqueIdentifier>{28216f1a-675a-458b-8d55-bd9ce82f4c41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Request">
+      <UniqueIdentifier>{1363fde7-1aeb-4479-a4d8-714bb00de8b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,6 +44,12 @@
     </ClCompile>
     <ClCompile Include="PlacaDeVideo.cpp">
       <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpHandler.h">
+      <Filter>Source Files\Headers\Request</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpHandler.cpp">
+      <Filter>Source Files\Entities\Request</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

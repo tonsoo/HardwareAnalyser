@@ -1,4 +1,8 @@
+#include "HttpHandler.h"
+
 #include <iostream>
+#include <sstream>
+#include <shellapi.h>
 
 #include "HardwareAnalyser.h"
 #include "Processador.h"
@@ -40,13 +44,53 @@ std::ostream& operator <<(std::ostream& os, const SQR::PlacaDeVideo* proc) {
 	return os;
 }
 
+std::string to_url(const std::string& value) {
+
+	return value;
+}
+
 int main() {
+
+	Http::HttpHandler* handler = new Http::HttpHandler();
+
+	/*handler->Fetch("http://localhost/processador/cadastrar?nome=i3%2010100f&fabricante=Intel&nucleos=4&threads=8&clock=3600&clock_turbo=4100&cache=8", "80");
+
+	return 0;*/
 	// Inicializa o analisador de hardware
 	SQR::HardwareAnalyser* analyser = new SQR::HardwareAnalyser();
 
 	/* PROCESSADOR */
 	// Inicializa um processador com base no processador do usuario
 	SQR::Processador* p = analyser->ProcessorInfo();
+
+	std::stringstream ss;
+	ss << "http://localhost/processador/cadastrar?";
+
+	ss << "nome=" << p->Nome();
+	ss << "&fabricante=" << p->Fabricante();
+	ss << "&nucleos=" << p->Cores();
+	ss << "&threads=" << p->Threads();
+	ss << "&clock=" << p->ClockBase();
+	ss << "&clock_turbo=" << p->ClockTurbo();
+	ss << "&cache=" << p->Cache();
+
+	std::string request = ss.str();
+	//std::cout << "Request: " << request << "\n\n";
+
+	std::cout << handler->Fetch(request, "80");
+
+	if (handler->ResponseCode != 200) {
+		std::cerr << "Houve um erro ao realizar conexão com o servidor!";
+		return -1;
+	}
+
+	ShellExecute(NULL, L"open", L"https://www.google.com", NULL, NULL, SW_SHOWNORMAL);
+
+	ExitProcess(0);
+
+	return 0;
+
+	p->Cache();
 
 	// Calcula a nota com uma margem de erro de 10
 	//p->CalcularNota(10);
