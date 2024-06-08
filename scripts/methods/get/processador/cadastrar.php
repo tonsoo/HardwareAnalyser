@@ -15,7 +15,9 @@ $db = DBConn::Instance();
 $query = 'WHERE (Nome=:Nome AND Fabricante=:Fabricante OR Modelo=:Modelo) OR (Clock=:Clock AND ClockTurbo=:ClockTurbo AND Nucleos=:Nucleos AND Threads=:Threads)';
 $db_Processador = $db->Read('processador', $query, $procArray);
 
-if(!$db_Processador){
+if($db_Processador){
+    $db->Update('processador', $procArray);
+} else {
     $db->Create('processador', $procArray);
 }
 
