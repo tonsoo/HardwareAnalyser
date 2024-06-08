@@ -1,6 +1,6 @@
 <?php
 
-$db = DBConn::Instance()->Connect('root', 'usbw', 'sera_que_roda');
+$db = DBConn::Instance();
 
 // $db->Create('tipo_requisito', [
 //     'tipo' => 'Novo tipo '.time().rand(0, 1000)
@@ -19,7 +19,4 @@ $db = DBConn::Instance()->Connect('root', 'usbw', 'sera_que_roda');
 
 $data = $db->Read('tipo_requisito');
 
-set_response(HTTP_OK, 'OK', [
-    'url' => $request_url,
-    'db' => $data
-]);
+set_response(HTTP_OK, 'OK', $data);

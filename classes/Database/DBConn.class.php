@@ -33,6 +33,14 @@ class DBConn extends UniqueModel {
 
     public function Execute(string $query, array $binds = []) : array {
 
+        foreach($binds as $bind => $value){
+            if(strpos($query, $bind) !== false){
+                continue;
+            }
+
+            unset($binds[$bind]);
+        }
+
         try {
             $stmt = $this->Conn->prepare($query, [
                 PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY
