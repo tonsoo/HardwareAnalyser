@@ -41,11 +41,6 @@ class DBConn extends UniqueModel {
             unset($binds[$bind]);
         }
 
-        echo $query;
-        echo '<pre>';
-        print_r($binds);
-        echo '</pre>';
-
         try {
             $stmt = $this->Conn->prepare($query, [
                 PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY
