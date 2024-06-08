@@ -41,11 +41,18 @@ class DBConn extends UniqueModel {
             unset($binds[$bind]);
         }
 
+        echo $query;
+        echo '<pre>';
+        print_r($binds);
+        echo '</pre>';
+
         try {
             $stmt = $this->Conn->prepare($query, [
                 PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY
             ]);
+
             $stmt->execute($binds);
+
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex){
             throw new DBExecuteException("Failed to execute {$query}\n", $ex->getCode());
@@ -88,15 +95,18 @@ class DBConn extends UniqueModel {
     public function Update(string $table, string $condition, array $updates, array $binds = []) : array {
 
         $update_data = $this->ConvertToBind($updates, 'update');
-        $update_query = implode(' ', array_map(function($e){
-            return "SET {$e}=:update{$e}";
+        $update_query = implode(', ', array_map(function($e){
+            return "{$e}=:update{$e}";
         }, array_keys($updates)));
+        $update_query = $update_query ? "SET {$update_query}" : '';
 
         if(!$update_query || !$condition){
             throw new DBExecuteException('Missing information for update');
         }
 
-        return $this->Execute("UPDATE {$table} {$update_query} {$condition}", array_merge($binds, $update_data));
+        $new_binds = $this->ConvertToBind($binds);
+
+        return $this->Execute("UPDATE {$table} {$update_query} {$condition}", array_merge($new_binds, $update_data));
     }
 
     public function Delete(string $table, string $condition, array $binds) : array {

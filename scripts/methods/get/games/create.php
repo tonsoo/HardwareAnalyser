@@ -1,15 +1,26 @@
 <?php
 
+try{
+    $Jogo = Jogo::FromArray($Input);
+} catch (MissingInputException $e){
+    set_response(HTTP_BAD_REQUEST, 'missing-input', [
+        'error' => $e->getMessage()
+    ]);
+}
+
+$JogoArray = $Jogo->ToArray();
+
 $db = DBConn::Instance();
 
-$Jogo = $db->Read('jogo', 'WHERE nome=:nome', $Input);
-if($Jogo){
-    $db->Update('jogo', 'WHERE id=:id', $Jogo['id'], $Input);
+$JogoDb = $db->Read('jogo', 'WHERE Id=:Id OR Nome=:Nome', $JogoArray);
+if($JogoDb){
+    $db->Update('jogo', 'WHERE Id=:Id', $JogoDb[0], $JogoArray);
 } else {
-    $db->Create('jogo', $Input);
+    $db->Create('jogo', $JogoArray);
 }
 
 set_response(HTTP_OK, 'OK', [
-    'jogo' => [],
-    'status' => $Jogo ? 'exists' : 'new'
+    'jogodb' => $JogoDb[0],
+    'jogo' => $JogoArray,
+    'status' => $JogoDb ? 'exists' : 'new'
 ]);
