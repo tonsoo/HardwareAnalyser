@@ -12,7 +12,7 @@ $procArray = $Processador->ToArray();
 
 $db = DBConn::Instance();
 
-$query = 'WHERE (Nome=:Nome AND Fabricante=:Fabricante OR Modelo=:Modelo) OR (Clock=:Clock AND ClockTurbo=:ClockTurbo AND Nucleos=:Nucleos AND Threads=:Threads)';
+$query = 'WHERE Id:Id OR (Nome=:Nome AND Fabricante=:Fabricante OR Modelo=:Modelo) OR (Clock=:Clock AND ClockTurbo=:ClockTurbo AND Nucleos=:Nucleos AND Threads=:Threads)';
 $db_Processador = $db->Read('processador', $query, $procArray);
 
 if($db_Processador){

@@ -22,21 +22,21 @@ class Processador extends ComponenteHardware {
 
     public static function FromArray(array $data) : self {
 
-        $correct_format = true;
-        $correct_format = $correct_format && ($data['nome'] ?? '');
-        $correct_format = $correct_format && ($data['modelo'] ?? '');
-        $correct_format = $correct_format && ($data['fabricante'] ?? '');
-        $correct_format = $correct_format && ($data['nucleos'] ?? '');
-        $correct_format = $correct_format && ($data['threads'] ?? '');
-        $correct_format = $correct_format && ($data['clock'] ?? '');
-        $correct_format = $correct_format && ($data['clock_turbo'] ?? '');
-        $correct_format = $correct_format && ($data['cache'] ?? '');
+        $id = $data['Id'] ?? 0;
+        $nome = $data['Nome'] ?? null;
+        $modelo = $data['Modelo'] ?? null;
+        $fabricante = $data['Fabricante'] ?? null;
+        $nucleos = $data['Nucleos'] ?? null;
+        $threads = $data['Threads'] ?? null;
+        $clock = $data['Clock'] ?? null;
+        $clockTurbo = $data['ClockTurbo'] ?? null;
+        $cache = $data['Cache'] ?? null;
 
-        if(!$correct_format){
+        if($nome === null || $modelo === null || $fabricante === null || $nucleos === null || $threads === null || $clock === null || $clockTurbo === null || $cache === null) {
             throw new MissingInputException("There are missing input for a Processor");
         }
 
-        return new self(0, $data['nome'], $data['modelo'], $data['fabricante'], $data['nucleos'], $data['threads'], $data['clock'], $data['clock_turbo'], $data['cache']);
+        return new self($id, $nome, $modelo, $fabricante, $nucleos, $threads, $clock, $clockTurbo, $cache);
     }
 
     public function Nota() : float {
