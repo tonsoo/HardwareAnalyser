@@ -63,28 +63,22 @@ int main() {
 	// Inicializa um processador com base no processador do usuario
 	SQR::Processador* p = analyser->ProcessorInfo();
 
-	std::stringstream ss;
-	ss << "http://localhost/processador/cadastrar?";
+	handler->AddParameter("Nome", p->Nome());
+	handler->AddParameter("Fabricante", p->Fabricante());
+	handler->AddParameter("Nucleos", p->Cores());
+	handler->AddParameter("Threads", p->Threads());
+	handler->AddParameter("Clock", p->ClockBase());
+	handler->AddParameter("ClockTurbo", p->ClockTurbo());
+	handler->AddParameter("Cache", p->Cache());
 
-	ss << "nome=" << p->Nome();
-	ss << "&fabricante=" << p->Fabricante();
-	ss << "&nucleos=" << p->Cores();
-	ss << "&threads=" << p->Threads();
-	ss << "&clock=" << p->ClockBase();
-	ss << "&clock_turbo=" << p->ClockTurbo();
-	ss << "&cache=" << p->Cache();
-
-	std::string request = ss.str();
-	//std::cout << "Request: " << request << "\n\n";
-
-	std::cout << handler->Fetch(request, "80");
+	std::cout << handler->Fetch("http://api.seraqueroda.com.br/processador/cadastrar", "80");
 
 	if (handler->ResponseCode != 200) {
 		std::cerr << "Houve um erro ao realizar conexão com o servidor!";
 		return -1;
 	}
 
-	ShellExecute(NULL, L"open", L"https://www.google.com", NULL, NULL, SW_SHOWNORMAL);
+	ShellExecute(NULL, L"open", L"https://www.seraqueroda.com.br", NULL, NULL, SW_SHOWNORMAL);
 
 	ExitProcess(0);
 

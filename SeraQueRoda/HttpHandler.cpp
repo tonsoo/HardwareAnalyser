@@ -70,23 +70,8 @@ namespace Http {
             std::string scheme = urlMatch[1].str();
             host = urlMatch[2].str();
             path = urlMatch[3].str();
-            std::string query = urlMatch[4].str();
-            std::string fragment = urlMatch[5].str();
 
-            // Encode components
-            if (!path.empty()) {
-                path = HttpHandler::UrlEncode(path);
-            }
-            if (!query.empty()) {
-                query = query.substr(1);
-                query = "?" + HttpHandler::UrlEncode(query);
-            }
-            if (!fragment.empty()) {
-                fragment = fragment.substr(1);
-                fragment = "#" + HttpHandler::UrlEncode(fragment);
-            }
-
-            path = path + query + fragment;
+            path = path + "?" + this->query;
         }
 
         std::string falseRet;
@@ -101,9 +86,13 @@ namespace Http {
             return falseRet;
         }
 
+        std::cout << "Path: " << path << "\n\n";
+
         std::string request = "GET " + path + " HTTP/1.1\r\n";
         request += "Host: " + host + "\r\n";
         request += "Connection: close\r\n\r\n";
+
+        std::cout << "Request headers: " << request << "\n\n";
 
         if (send(sockfd, request.c_str(), static_cast<int>(request.size()), 0) == SOCKET_ERROR) {
             std::cerr << "send error\n";
@@ -155,17 +144,50 @@ namespace Http {
     }
 
     std::string HttpHandler::UrlEncode(const std::string& url){
-        std::ostringstream encoded;
-        encoded << std::hex << std::uppercase;
+        std::ostringstream escaped;
+        escaped.fill('0');
+        escaped << std::hex;
 
         for (char c : url) {
-            if (HttpHandler::IsReserved(c)) {
-                encoded << c;
-            } else {
-                encoded << '%' << std::setw(2) << std::setfill('0') << static_cast<int>(static_cast<unsigned char>(c));
+            if (isalnum(static_cast<unsigned char>(c)) || c == '-' || c == '_' || c == '.' || c == '~') {
+                escaped << c;
+            }
+            else {
+                escaped << '%' << std::setw(2) << static_cast<int>(static_cast<unsigned char>(c));
             }
         }
 
-        return encoded.str();
+        return escaped.str();
     }
+
+    void HttpHandler::AddParameter(const std::string& name, const std::string& value) {
+
+        if (this->query != "") {
+            this->query += "&";
+        }
+
+        this->query += this->UrlEncode(name) + "=" + this->UrlEncode(value);
+    }
+
+    void HttpHandler::AddParameter(const std::string& name, const double& value) {
+        std::ostringstream ss;
+        ss << value;
+
+        this->AddParameter(name, ss.str());
+    }
+
+    void HttpHandler::AddParameter(const std::string& name, const int& value) {
+        std::ostringstream ss;
+        ss << value;
+
+        this->AddParameter(name, ss.str());
+    }
+
+    void HttpHandler::AddParameter(const std::string& name, const char& value) {
+        std::ostringstream ss;
+        ss << value;
+
+        this->AddParameter(name, ss.str());
+    }
+
 }
