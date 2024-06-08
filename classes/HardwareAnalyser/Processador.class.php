@@ -2,17 +2,15 @@
 
 class Processador extends ComponenteHardware {
 
-    private $Modelo;
     private $Nucleos;
     private $Threads;
     private $Clock;
     private $ClockTurbo;
     private $Cache;
 
-    public function __construct(int $id, string $nome, string $modelo, string $fabricante, int $nucleos, int $threads, int $clock, int $clockTurbo, float $cache) {
+    public function __construct(int $id, string $nome, string $fabricante, int $nucleos, int $threads, int $clock, int $clockTurbo, float $cache) {
 
         parent::__construct($id, $nome, $fabricante);
-        $this->Modelo = $modelo;
         $this->Nucleos = $nucleos;
         $this->Threads = $threads;
         $this->Clock = $clock;
@@ -24,7 +22,6 @@ class Processador extends ComponenteHardware {
 
         $id = $data['Id'] ?? 0;
         $nome = $data['Nome'] ?? null;
-        $modelo = $data['Modelo'] ?? null;
         $fabricante = $data['Fabricante'] ?? null;
         $nucleos = $data['Nucleos'] ?? null;
         $threads = $data['Threads'] ?? null;
@@ -32,11 +29,11 @@ class Processador extends ComponenteHardware {
         $clockTurbo = $data['ClockTurbo'] ?? null;
         $cache = $data['Cache'] ?? null;
 
-        if($nome === null || $modelo === null || $fabricante === null || $nucleos === null || $threads === null || $clock === null || $clockTurbo === null || $cache === null) {
+        if($nome === null || $fabricante === null || $nucleos === null || $threads === null || $clock === null || $clockTurbo === null || $cache === null) {
             throw new MissingInputException("There are missing input for a Processor");
         }
 
-        return new self($id, $nome, $modelo, $fabricante, $nucleos, $threads, $clock, $clockTurbo, $cache);
+        return new self($id, $nome, $fabricante, $nucleos, $threads, $clock, $clockTurbo, $cache);
     }
 
     public function Nota() : float {
