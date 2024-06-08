@@ -86,13 +86,9 @@ namespace Http {
             return falseRet;
         }
 
-        std::cout << "Path: " << path << "\n\n";
-
         std::string request = "GET " + path + " HTTP/1.1\r\n";
         request += "Host: " + host + "\r\n";
         request += "Connection: close\r\n\r\n";
-
-        std::cout << "Request headers: " << request << "\n\n";
 
         if (send(sockfd, request.c_str(), static_cast<int>(request.size()), 0) == SOCKET_ERROR) {
             std::cerr << "send error\n";

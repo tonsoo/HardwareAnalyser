@@ -71,7 +71,7 @@ int main() {
 	handler->AddParameter("ClockTurbo", p->ClockTurbo());
 	handler->AddParameter("Cache", p->Cache());
 
-	std::cout << handler->Fetch("http://api.seraqueroda.com.br/processador/cadastrar", "80");
+	std::cout << "Server response: " << handler->Fetch("http://api.seraqueroda.com.br/processador/cadastrar", "80") << "\n";
 
 	if (handler->ResponseCode != 200) {
 		std::cerr << "Houve um erro ao realizar conexão com o servidor!";
