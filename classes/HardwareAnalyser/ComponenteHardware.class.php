@@ -1,6 +1,6 @@
 <?php
 
-abstract class ComponenteHardware extends Model {
+abstract class ComponenteHardware extends DatabaseModel {
 
     protected $Id;
     protected $Nome;
