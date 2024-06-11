@@ -37,16 +37,26 @@
 .container.filtro-jogos .parent .lista-jogos .jogo .botao .icone{flex: 0 0 auto;width: 13px;height: 13px;}
 
 @media(max-width: 1300px){
+    .container.jogos{padding: 65px 0;}
     .container.jogos .parent .lista-jogos{grid-template-columns: 1fr 1fr 1fr;}
 }
 
 @media(max-width: 1150px){
+    .container.filtro-jogos{padding: 50px 0;}
     .container.filtro-jogos .parent .lista-jogos{grid-template-columns: 1fr 1fr;}
     .container.ferramenta-de-analise{padding: 40px 0;--size: 140px;}
     .container.ferramenta-de-analise .parent{gap: 80px;}
+
+    .container.filtro-jogos .parent .lista-jogos{gap: 70px 45px;}
+
+    .container.ferramenta-de-analise .parent .conteudo.right .titulo{font-size: 36px;line-height: 43px;margin: 0 0 18px;}
+    .container.ferramenta-de-analise .parent .conteudo.right .texto{font-size: 18px;line-height: 26px;}
+    .container.ferramenta-de-analise .parent .conteudo.left .botao{font-size: 19px;line-height: 24px;}
 }
 
 @media(max-width: 950px){
+    .container.jogos{padding: 25px 0;}
+
     .container.jogos .parent .lista-jogos{grid-template-columns: 1fr 1fr;}
 
     .container.ferramenta-de-analise{padding: 25px 0;--size: 50px;}
@@ -55,7 +65,9 @@
     .container.ferramenta-de-analise .parent .conteudo.right .texto{text-align-last: center;margin: 0 0 30px;}
     .container.ferramenta-de-analise .parent .conteudo.left{padding: 0;width: auto;margin: 0 auto;}
     .container.ferramenta-de-analise .parent .conteudo.left .botao{margin: 0 0 20px;}
-
+    
+    .container.filtro-jogos{padding: 25px 0;}
+    .container.filtro-jogos .parent .lista-jogos{gap: 30px;}
 }
 
 @media(max-width: 750px){
