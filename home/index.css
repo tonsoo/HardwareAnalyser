@@ -1,0 +1,36 @@
+.container.jogos{padding: 121px 0 116px;background: linear-gradient(90deg, #700B47a3, #700B47a3), url('img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;}
+.container.jogos .parent .lista-jogos{gap: 69px;display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;}
+.container.jogos .parent .lista-jogos .jogo{border-radius: 3px;overflow: hidden;display: block;}
+.container.jogos .parent .lista-jogos .jogo .header{padding: 8px 10px 8px;background: var(--cor1);font: 500 16px / 20px var(--font1);text-align: center;color: var(--cor2);transition: .4s;}
+.container.jogos .parent .lista-jogos .jogo:hover .header{background: var(--cor3);}
+.container.jogos .parent .lista-jogos .jogo .imagem{height: 225px;width: 168px;position: relative;}
+.container.jogos .parent .lista-jogos .jogo .imagem .data{position: absolute;left: 4px;bottom: 4px;padding: 6px 12px 4px 11px;border-radius: 3px;background: #000000ba;height: fit-content;width: fit-content;font: 600 11px / 18px var(--font1);color: var(--cor2);}
+.container.jogos .parent .lista-jogos .jogo .botao{font: 400 18px / 23px var(--font1);color: var(--cor2);padding: 6px 10px 7px;justify-content: center;align-items: center;gap: 14px;background: var(--cor1);transition: .4s;}
+.container.jogos .parent .lista-jogos .jogo:hover .botao{background: var(--cor3);}
+.container.jogos .parent .lista-jogos .jogo .botao .icone{flex: 0 0 auto;width: 14px;height: 14px;}
+
+.container.ferramenta-de-analise{padding: 71px 0 115px;border-radius: 0 0 69px 69px;background: #fff;position: relative;margin: 0 0 240px;}
+.container.ferramenta-de-analise > .fundo{position: absolute;left: 0;top: 0;width: 100%;height: calc(100% + 240px);background: linear-gradient(90deg, #700B47a3, #700B47a3), url('img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;z-index: -1;}
+.container.ferramenta-de-analise .parent{justify-content: space-between;align-items: flex-start;gap: 138px;}
+.container.ferramenta-de-analise .parent .conteudo.left{flex: 0 0 auto;width: 296px;padding: 71px 0;}
+.container.ferramenta-de-analise .parent .conteudo.left .botao{font: 500 28px / 34px var(--font1);color: var(--cor2);gap: 28px;padding: 13px 43px 10px;border-radius: 7px;transition: .4s;background: var(--cor3);border: 2px solid var(--cor1);align-items: center;justify-content: center;margin: 0 0 36px;}
+.container.ferramenta-de-analise .parent .conteudo.left .botao:last-of-type{margin: 0;}
+.container.ferramenta-de-analise .parent .conteudo.left .botao .icone{flex: 0 0 auto;width: 23px;height: 23px;}
+.container.ferramenta-de-analise .parent .conteudo.left .botao.verde{background: #298C39;border-color: #186023;}
+.container.ferramenta-de-analise .parent .conteudo.left .botao.azul{background: #1CA1BE;border-color: #114677;}
+.container.ferramenta-de-analise .parent .conteudo.right{flex: 1 1 auto;}
+.container.ferramenta-de-analise .parent .conteudo.right .titulo{font: 600 42.27px / 50px var(--font1);text-align: right;color: var(--cor1);margin: 0 0 23px;}
+.container.ferramenta-de-analise .parent .conteudo.right .texto{font: 300 24px / 32px var(--font1);color: var(--cor1);text-align: justify;text-align-last: right;}
+
+.container.filtro-jogos{padding: 96px 0 118px;}
+.container.filtro-jogos .parent .lista-jogos{display: grid;gap: 125px 49px;grid-template-columns: 1fr 1fr 1fr;}
+.container.filtro-jogos .parent .lista-jogos .jogo{display: block;border-radius: 0 3px 3px 3px;overflow: hidden;}
+.container.filtro-jogos .parent .lista-jogos .jogo .conteudo{align-items: stretch;justify-content: space-between;display: flex;}
+.container.filtro-jogos .parent .lista-jogos .jogo .conteudo .imagem{flex: 0 0 auto;width: 143px;min-height: 190px;}
+.container.filtro-jogos .parent .lista-jogos .jogo .conteudo .informacoes{flex: 1 1 auto;display: flex;flex-direction: column;align-items: stretch;justify-content: flex-start;}
+.container.filtro-jogos .parent .lista-jogos .jogo .conteudo .informacoes .data{padding: 6px 10px 5px;background: var(--cor1);font: 500 14px / 18px var(--font1);color: var(--cor2);text-align: center;}
+.container.filtro-jogos .parent .lista-jogos .jogo .conteudo .informacoes .titulo{flex: 1 1 auto;font: 600 21px / 28px var(--font1);color: var(--cor1);margin: 12px 11px;}
+.container.filtro-jogos .parent .lista-jogos .jogo .botao{padding: 11px 34px;align-items: center;justify-content: center;gap: 10px;display: flex;font: 400 17px / 20px var(--font1);color: var(--cor2);background: var(--cor3);}
+.container.filtro-jogos .parent .lista-jogos .jogo .botao.verde{background: #298C39;}
+.container.filtro-jogos .parent .lista-jogos .jogo .botao.botao.azul{background: #1CA1BE;}
+.container.filtro-jogos .parent .lista-jogos .jogo .botao .icone{flex: 0 0 auto;width: 13px;height: 13px;}

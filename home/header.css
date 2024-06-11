@@ -1,0 +1,12 @@
+.container.header{padding: 13px 39px;background: var(--cor1);justify-content: space-between;align-items: center;}
+.container.header .pagina-info{gap: 24px;align-items: center;justify-content: flex-start;}
+.container.header .pagina-info .logo{display: block;width: 73px;height: 51px;flex: 0 0 auto;}
+.container.header .pagina-info .separator{font: 400 34px var(--font1);color: var(--cor3);}
+.container.header .pagina-info .pagina{font: 600 28px var(--font1);color: var(--cor2);transition: .4s;}
+.container.header .pagina-info .pagina:hover{cursor: pointer;color: var(--cor3);}
+
+.container.header .paginas .lista-paginas{gap: 17px;}
+.container.header .paginas .lista-paginas .pagina{display: flex;align-items: center;justify-content: center;gap: 8px;padding: 6px 16px;border-radius: 2px;border: 1px solid var(--cor3);transition: .4s;font: 400 18px / 22px var(--font1);color: var(--cor2);align-items: center;}
+.container.header .paginas .lista-paginas .pagina:hover,
+.container.header .paginas .lista-paginas .pagina.ativo{background: var(--cor3);}
+.container.header .paginas .lista-paginas .pagina .icone{flex: 0 0 auto;width: 12px;height: 12px;}
