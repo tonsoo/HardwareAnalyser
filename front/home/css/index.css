@@ -1,4 +1,4 @@
-.container.jogos{padding: 121px 0 116px;background: linear-gradient(90deg, #700B47a3, #700B47a3), url('img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;}
+.container.jogos{padding: 121px 0 116px;background: linear-gradient(90deg, #700B47a3, #700B47a3), url('../img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;}
 .container.jogos .parent .lista-jogos{gap: 69px;display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;}
 .container.jogos .parent .lista-jogos .jogo{border-radius: 3px;overflow: hidden;display: block;}
 .container.jogos .parent .lista-jogos .jogo .header{padding: 8px 10px 8px;background: var(--cor1);font: 500 16px / 20px var(--font1);text-align: center;color: var(--cor2);transition: .4s;}
@@ -11,7 +11,7 @@
 .container.jogos .parent .lista-jogos .jogo .botao .icone{flex: 0 0 auto;width: 14px;height: 14px;}
 
 .container.ferramenta-de-analise{--size: 240px;padding: 71px 0 115px;border-radius: 0 0 69px 69px;background: #fff;position: relative;margin: 0 0 var(--size);}
-.container.ferramenta-de-analise > .fundo{position: absolute;left: 0;top: 0;width: 100%;height: calc(100% + var(--size));background: linear-gradient(90deg, #700B47a3, #700B47a3), url('img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;z-index: -1;}
+.container.ferramenta-de-analise > .fundo{position: absolute;left: 0;top: 0;width: 100%;height: calc(100% + var(--size));background: linear-gradient(90deg, #700B47a3, #700B47a3), url('../img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;z-index: -1;}
 .container.ferramenta-de-analise .parent{justify-content: space-between;align-items: flex-start;gap: 138px;}
 .container.ferramenta-de-analise .parent .conteudo.left{flex: 0 0 auto;width: 296px;padding: 71px 0;}
 .container.ferramenta-de-analise .parent .conteudo.left .botao{font: 500 28px / 34px var(--font1);color: var(--cor2);gap: 28px;padding: 13px 43px 10px;border-radius: 7px;transition: .4s;background: var(--cor3);border: 2px solid var(--cor1);align-items: center;justify-content: center;margin: 0 0 36px;}
