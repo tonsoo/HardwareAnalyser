@@ -35,3 +35,8 @@ Nome: Nome do jogo. Obrigatorio.
 Lancamento: Data de lançamento do jogo no formato YYYY-mm-dd. Obrigatorio.
 Descricao: A descrição do jogo. Obrigatorio.
 LinkDownload: Link para a pagina de download ou pagina oficial do jogo. Obrigatorio.
+
+### GET /games/list
+Faz a lista de todos os jogos.
+
+Não ha necessidade de encaminhar parametros.
