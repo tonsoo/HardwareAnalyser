@@ -10,8 +10,8 @@
 .container.jogos .parent .lista-jogos .jogo:hover .botao{background: var(--cor3);}
 .container.jogos .parent .lista-jogos .jogo .botao .icone{flex: 0 0 auto;width: 14px;height: 14px;}
 
-.container.ferramenta-de-analise{padding: 71px 0 115px;border-radius: 0 0 69px 69px;background: #fff;position: relative;margin: 0 0 240px;}
-.container.ferramenta-de-analise > .fundo{position: absolute;left: 0;top: 0;width: 100%;height: calc(100% + 240px);background: linear-gradient(90deg, #700B47a3, #700B47a3), url('img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;z-index: -1;}
+.container.ferramenta-de-analise{--size: 240px;padding: 71px 0 115px;border-radius: 0 0 69px 69px;background: #fff;position: relative;margin: 0 0 var(--size);}
+.container.ferramenta-de-analise > .fundo{position: absolute;left: 0;top: 0;width: 100%;height: calc(100% + var(--size));background: linear-gradient(90deg, #700B47a3, #700B47a3), url('img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;z-index: -1;}
 .container.ferramenta-de-analise .parent{justify-content: space-between;align-items: flex-start;gap: 138px;}
 .container.ferramenta-de-analise .parent .conteudo.left{flex: 0 0 auto;width: 296px;padding: 71px 0;}
 .container.ferramenta-de-analise .parent .conteudo.left .botao{font: 500 28px / 34px var(--font1);color: var(--cor2);gap: 28px;padding: 13px 43px 10px;border-radius: 7px;transition: .4s;background: var(--cor3);border: 2px solid var(--cor1);align-items: center;justify-content: center;margin: 0 0 36px;}
@@ -35,3 +35,30 @@
 .container.filtro-jogos .parent .lista-jogos .jogo .botao.verde{background: #298C39;}
 .container.filtro-jogos .parent .lista-jogos .jogo .botao.botao.azul{background: #1CA1BE;}
 .container.filtro-jogos .parent .lista-jogos .jogo .botao .icone{flex: 0 0 auto;width: 13px;height: 13px;}
+
+@media(max-width: 1300px){
+    .container.jogos .parent .lista-jogos{grid-template-columns: 1fr 1fr 1fr;}
+}
+
+@media(max-width: 1150px){
+    .container.filtro-jogos .parent .lista-jogos{grid-template-columns: 1fr 1fr;}
+    .container.ferramenta-de-analise{padding: 40px 0;--size: 140px;}
+    .container.ferramenta-de-analise .parent{gap: 80px;}
+}
+
+@media(max-width: 950px){
+    .container.jogos .parent .lista-jogos{grid-template-columns: 1fr 1fr;}
+
+    .container.ferramenta-de-analise{padding: 25px 0;--size: 50px;}
+    .container.ferramenta-de-analise .parent{flex-direction: column-reverse;gap: 0;}
+    .container.ferramenta-de-analise .parent .conteudo.right .titulo{text-align: center;}
+    .container.ferramenta-de-analise .parent .conteudo.right .texto{text-align-last: center;margin: 0 0 30px;}
+    .container.ferramenta-de-analise .parent .conteudo.left{padding: 0;width: auto;margin: 0 auto;}
+    .container.ferramenta-de-analise .parent .conteudo.left .botao{margin: 0 0 20px;}
+
+}
+
+@media(max-width: 750px){
+    .container.jogos .parent .lista-jogos{grid-template-columns: 1fr;}
+    .container.filtro-jogos .parent .lista-jogos{grid-template-columns: 1fr;}
+}
