@@ -2,7 +2,7 @@
 
 ## Metodos do Processador:
 
-### GET /processador/cadastrar
+### POST /processador/cadastrar
 Ira realizar o cadastro de um processador ao banco de dados.
 
 Id: Numero do id do processador no branco de dados. Opicional.
@@ -27,7 +27,7 @@ Id: Numero do id do processador. Obrigatorio.
 
 ## Metodos dos jogos:
 
-### GET /games/create
+### POST /games/create
 Faz a inserção de um jogo ao banco de dados.
 
 Id: Numero do id do jogo. Opicional.
