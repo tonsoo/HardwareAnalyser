@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sera Que Roda</title>
+    <link rel="stylesheet" href="css/boot.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <section class="container header flex">
+            <div class="pagina-info flex">
+                <a href="">
+                    <picture class="logo imagem-fit">
+                        <img src="img/logo.png" alt="Lodo do Sera que roda">
+                    </picture>
+                </a>
+                <div class="separator">
+                    <p>/</p>
+                </div>
+                <a href="analise-online" class="pagina">
+                    <p>Analise Online</p>
+                </a>
+            </div>
+            <div class="botoes-mobile">
+                <div class="menu toggle-menu-js">
+                    <picture class="icone imagem-fit">
+                        <img src="img/icones/menu.png" alt="Menu">
+                    </picture>
+                </div>
+            </div>
+            <nav class="paginas">
+                <div class="fechar toggle-menu-js">X</div>
+                <ul class="lista-paginas flex">
+                    <li class="logo-mobile-parent">
+                        <a href="" class="logo-mobile">
+                            <picture class="imagem imagem-fit">
+                                <img src="img/logo.png" alt="Sera que roda">
+                            </picture>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analise-online" class="pagina ativo">
+                            <picture class="icone imagem-fit">
+                                <img src="img/icones/lupa.png" alt="Analise de hardware online">
+                            </picture>
+                            <p>Analise online</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analisar-meu-pc" class="pagina">
+                            <picture class="icone imagem-fit">
+                                <img src="img/icones/lupa.png" alt="Analise de hardware">
+                            </picture>
+                            <p>Analisar meu PC</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="estatisticas" class="pagina">
+                            <picture class="icone imagem-fit">
+                                <img src="img/icones/statistics.png" alt="Estatisticas">
+                            </picture>
+                            <p>Estatisticas</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="jogos" class="pagina">
+                            <picture class="icone imagem-fit">
+                                <img src="img/icones/controller.png" alt="Jogos">
+                            </picture>
+                            <p>Jogos</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="feedback" class="pagina">
+                            <picture class="icone imagem-fit">
+                                <img src="img/icones/feedback.png" alt="Feedback">
+                            </picture>
+                            <p>Feedback</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </header>
+    <main>
+        <section class="container banner-pagina">
+            <div class="conteudo-1120 parent flex">
+                <div class="linha flex"></div>
+                <p>CALCULADORA DE DESEMPENHO</p>
+                <div class="linha"></div>
+            </div>
+        </section>
+        <section class="container calculadora">
+            <div class="conteudo-1120 parent flex">
+                <form action="" class="calculadora-js conteudo left">
+                    <div class="input-parent">
+                        <picture class="icone imagem-fit">
+                            <img src="img/icones/cpu.png" alt="Processador">
+                        </picture>
+                        <select name="processador" class="input">
+                            <option value="1">i3 10100f</option>
+                            <option value="1">AMD Athlon 3000g</option>
+                        </select>
+                    </div>
+                    <div class="input-parent">
+                        <picture class="icone imagem-fit">
+                            <img src="img/icones/gpu.png" alt="Processador">
+                        </picture>
+                        <select name="gpu" class="input">
+                            <option value="1">RTX 2060 SUPER</option>
+                            <option value="2">GTX 1650</option>
+                            <option value="3">RX 580</option>
+                        </select>
+                    </div>
+                    <div class="input-parent">
+                        <picture class="icone imagem-fit">
+                            <img src="img/icones/ram.png" alt="Processador">
+                        </picture>
+                        <select name="ram" class="input">
+                            <option value="1">8Gb 2x</option>
+                            <option value="2">16Gb 1x</option>
+                            <option value="3">4Gb 4x</option>
+                        </select>
+                    </div>
+                    <div class="input-parent">
+                        <picture class="icone imagem-fit">
+                            <img src="img/icones/monitor.png" alt="Processador">
+                        </picture>
+                        <select name="monitor" class="input">
+                            <option value="1">1920x1080</option>
+                            <option value="2">1366x720</option>
+                        </select>
+                    </div>
+                    <button class="calcular">
+                        <p>CALCULAR</p>
+                        <picture class="icone imagem-fit">
+                            <img src="img/icones/calculadora.png" alt="Calcular">
+                        </picture>
+                    </button>
+                </form>
+                <div class="conteudo right">
+                    <div class="titulo">
+                        <p>Sua nota é:</p>
+                    </div>
+                    <div class="nota">
+                        <p>00.0</p>
+                    </div>
+                    <ul class="sugestoes">
+                        <li class="item">
+                            <p>Sugestão 1</p>
+                        </li>
+                        <li class="item">
+                            <p>Sugestão 2, algo aqui</p>
+                        </li>
+                        <li class="item">
+                            <p>Sugestão 3, isso não existe e esta apenas com intuito de placeholder</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <section class="container footer">
+            <div class="conteudo-1140 parent">
+                <div class="logo">
+                    <a href="">
+                        <picture class="imagem imagem-fit">
+                            <img src="img/logo.png" alt="Sera que roda">
+                        </picture>
+                    </a>
+                    <div class="titulo">
+                        <p>Projeto Interdisciplinar: Desenvolvimento de Software</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/header.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+.container.banner-pagina{padding: 63px 0;background: linear-gradient(90deg, #2E2E2E99, #2E2E2E99), url('../img/fundos/pc-gamer.jpg') no-repeat center center / cover fixed;}
+.container.banner-pagina .parent{font: 700 47px / 54px var(--font1);color: var(--cor2);justify-content: center;align-items: center;gap: 18px;}
+.container.banner-pagina .parent .linha{height: 5px;flex: 1 1 auto;background: var(--cor5);}
+
+.container.calculadora{padding: 70px 0 103px;}
+.container.calculadora .parent{gap: 66px;}
+.container.calculadora .parent .conteudo.left{flex: 0 0 797px;display: grid;grid-template-columns: 1fr 1fr;gap: 39px 31px;}
+.container.calculadora .parent .conteudo.left .input-parent{display: flex;align-items: center;justify-content: flex-start;gap: 23px;}
+.container.calculadora .parent .conteudo.left .input-parent .icone{flex: 0 0 auto;width: 32px;height: 34px;}
+.container.calculadora .parent .conteudo.left .input-parent .input{flex: 1 1 auto;padding: 0 20px;border-radius: 4px;border: 1px solid var(--cor4);font: 400 17px / 24px var(--font1);color: var(--cor1);height: 38px;}
+.container.calculadora .parent .conteudo.left .calcular{grid-column: 2/2;margin: 0 0 0 55px;display: flex;align-items: center;justify-content: center;gap: 20px;font: 500 28px / 32px var(--font1);color: var(--cor2);padding: 16px 60px 14px;background: var(--cor7);border-radius: 3px;border: none;outline: none;user-select: none;height: fit-content;}
+.container.calculadora .parent .conteudo.left .calcular:hover{cursor: pointer;}
+.container.calculadora .parent .conteudo.left .calcular .icone{width: 21px;height: 21px;}
+.container.calculadora .parent .conteudo.right{flex: 1 1 auto;border: 3px solid var(--cor1);border-radius: 8px;overflow: hidden;padding: 15px 17px 25px;}
+.container.calculadora .parent .conteudo.right .titulo{text-align: center;font: 600 19px / 24px var(--font1);color: var(--cor1);margin: 0 0 14px;}
+.container.calculadora .parent .conteudo.right .nota{font: 700 96px / 100px var(--font1);color: var(--cor1);text-align: center;border-bottom: 1px solid var(--cor3);margin: 0 0 20px;}
+.container.calculadora .parent .conteudo.right .sugestoes{margin: 0 9px;list-style: disc;padding: 0 0 0 20px;font: 700 14px / 19px var(--font1);color: var(--cor1);}
+.container.calculadora .parent .conteudo.right .sugestoes .item{list-style: disc;}
