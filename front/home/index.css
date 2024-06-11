@@ -3,7 +3,8 @@
 .container.jogos .parent .lista-jogos .jogo{border-radius: 3px;overflow: hidden;display: block;}
 .container.jogos .parent .lista-jogos .jogo .header{padding: 8px 10px 8px;background: var(--cor1);font: 500 16px / 20px var(--font1);text-align: center;color: var(--cor2);transition: .4s;}
 .container.jogos .parent .lista-jogos .jogo:hover .header{background: var(--cor3);}
-.container.jogos .parent .lista-jogos .jogo .imagem{height: 225px;width: 168px;position: relative;}
+.container.jogos .parent .lista-jogos .jogo .imagem{height: 225px;position: relative;background: var(--cor3);transition: .4s;}
+.container.jogos .parent .lista-jogos .jogo:hover .imagem{background: var(--cor2);}
 .container.jogos .parent .lista-jogos .jogo .imagem .data{position: absolute;left: 4px;bottom: 4px;padding: 6px 12px 4px 11px;border-radius: 3px;background: #000000ba;height: fit-content;width: fit-content;font: 600 11px / 18px var(--font1);color: var(--cor2);}
 .container.jogos .parent .lista-jogos .jogo .botao{font: 400 18px / 23px var(--font1);color: var(--cor2);padding: 6px 10px 7px;justify-content: center;align-items: center;gap: 14px;background: var(--cor1);transition: .4s;}
 .container.jogos .parent .lista-jogos .jogo:hover .botao{background: var(--cor3);}
