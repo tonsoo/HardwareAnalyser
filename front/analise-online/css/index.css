@@ -12,10 +12,10 @@
 .container.calculadora .parent .conteudo.left .calcular:hover{cursor: pointer;}
 .container.calculadora .parent .conteudo.left .calcular .icone{width: 21px;height: 21px;}
 .container.calculadora .parent .conteudo.right{flex: 0 0 221px;border: 3px solid var(--cor1);border-radius: 8px;overflow: hidden;padding: 15px 17px 25px;}
-.container.calculadora .parent .conteudo.right .titulo{text-align: center;font: 600 19px / 24px var(--font1);color: var(--cor1);margin: 0 0 14px;}
+.container.calculadora .parent .conteudo.right .titulo{text-align: center;font: 600 21px / 26px var(--font1);color: var(--cor1);margin: 0 0 14px;}
 .container.calculadora .parent .conteudo.right .nota{font: 700 96px / 100px var(--font1);color: var(--cor1);text-align: center;border-bottom: 1px solid var(--cor3);margin: 0 0 20px;}
-.container.calculadora .parent .conteudo.right .sugestoes{margin: 0 9px;list-style: disc;padding: 0 0 0 20px;font: 700 14px / 19px var(--font1);color: var(--cor1);}
-.container.calculadora .parent .conteudo.right .sugestoes .item{list-style: disc;}
+.container.calculadora .parent .conteudo.right .sugestoes{margin: 0 9px;list-style: disc;padding: 0 0 0 20px;font: 700 17px / 22px var(--font1);color: var(--cor1);}
+.container.calculadora .parent .conteudo.right .sugestoes .item{list-style: disc;margin: 0 0 10px;}
 
 @media(max-width: 990px){
     .container.banner-pagina{padding: 25px 0;}
